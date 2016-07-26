@@ -1,0 +1,35 @@
+---
+
+- name: Check if Command-T was installed
+  command: test -d {{ vim_build_command_t_dir }}
+  register: vim_build_command_t_installed
+  changed_when: false
+  failed_when: vim_build_command_t_installed.rc != 0 and vim_build_command_t_installed.rc != 1
+  when: vim_build_command_t_ruby is defined
+
+- name: Check if Command-T was compiled
+  command: test -f {{ vim_build_command_t_ext_dir }}/ext.bundle
+  register: vim_build_command_t_compiled
+  changed_when: vim_build_command_t_compiled.rc == 1
+  failed_when: vim_build_command_t_compiled.rc != 0 and vim_build_command_t_compiled.rc != 1
+  when: vim_build_command_t_installed is defined and vim_build_command_t_installed
+
+- name: Build Command-T extension
+  shell: "{{ vim_build_command_t_ruby }} extconf.rb"
+  args:
+    chdir: "{{ vim_build_command_t_ext_dir }}"
+  become: true
+  become_user: "{{ vim_build_command_t_user }}"
+  when: vim_build_command_t_compiled is defined and vim_build_command_t_compiled|changed
+
+- name: Make clean Command-T
+  shell: make clean chdir={{ vim_build_command_t_ext_dir }}
+  become: true
+  become_user: "{{ vim_build_command_t_user }}"
+  when: vim_build_command_t_compiled is defined and vim_build_command_t_compiled|changed
+
+- name: Make Command-T
+  shell: make chdir={{ vim_build_command_t_ext_dir }}
+  become: true
+  become_user: "{{ vim_build_command_t_user }}"
+  when: vim_build_command_t_compiled is defined and vim_build_command_t_compiled|changed

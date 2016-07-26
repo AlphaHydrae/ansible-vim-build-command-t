@@ -1,0 +1,6 @@
+---
+vim_build_command_t_user: "{{ user | default(omit) }}"
+vim_build_comamnd_t_user_home: "{{ host_user_homes }}/{{ vundle_user }}"
+vim_build_command_t_vim_dir: "{{ vim_build_comamnd_t_user_home }}/.vim"
+vim_build_command_t_dir: "{{ vim_build_command_t_vim_dir }}/bundle/Command-T"
+vim_build_command_t_ext_dir: "{{ vim_build_command_t_dir }}/ruby/command-t"

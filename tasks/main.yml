@@ -20,7 +20,7 @@
     chdir: "{{ vim_build_command_t_ext_dir }}"
   become: true
   become_user: "{{ vim_build_command_t_user }}"
-  when: vim_build_command_t_compiled is defined and vim_build_command_t_compiled|changed
+  when: vim_build_command_t_compiled is defined and vim_build_command_t_compiled is changed
 
 - name: Make clean Command-T
   shell: make clean
@@ -28,7 +28,7 @@
     chdir: "{{ vim_build_command_t_ext_dir }}"
   become: true
   become_user: "{{ vim_build_command_t_user }}"
-  when: vim_build_command_t_compiled is defined and vim_build_command_t_compiled|changed
+  when: vim_build_command_t_compiled is defined and vim_build_command_t_compiled is changed
 
 - name: Make Command-T
   shell: make
@@ -36,4 +36,4 @@
     chdir: "{{ vim_build_command_t_ext_dir }}"
   become: true
   become_user: "{{ vim_build_command_t_user }}"
-  when: vim_build_command_t_compiled is defined and vim_build_command_t_compiled|changed
+  when: vim_build_command_t_compiled is defined and vim_build_command_t_compiled is changed
